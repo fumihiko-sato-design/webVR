@@ -18,7 +18,7 @@ export default class Floor {
   }
 
   setGeometries() {
-    this.gerometry = new THREE.CircleGeometry(5, 64);
+    this.gerometry = new THREE.CircleGeometry(20, 64);
   }
   setTextures() {
     this.textures = {};

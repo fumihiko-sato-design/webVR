@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        // ...既存の設定...
+        "strictPropertyInitialization": false
+    }
+}

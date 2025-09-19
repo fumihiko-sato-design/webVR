@@ -26,4 +26,19 @@ export default [
     type: "gltfModel",
     path: "models/Fox/glTF/Fox.gltf",
   },
+  {
+    name: "carModel",
+    type: "fbxModel",
+    path: "models/Car/Generic_SUV_v1_2023_LowPoly_fbx2015.FBX",
+  },
+  {
+    name: "buildingModel",
+    type: "gltfModel",
+    path: "models/Bldg/64414283_bldg_6680.glb",
+  },
+  {
+    name: "skyTexture",
+    type: "hdrTexture",
+    path: "models/hdri/Sunflowers_Pure_Sky_2K.exr",
+  },
 ];

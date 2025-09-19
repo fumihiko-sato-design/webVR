@@ -1,11 +1,13 @@
 import * as THREE from "three";
 import Experience from "./Experience";
 import WebXRPolyfill from "webxr-polyfill";
+import EventEmitter from "./Utils/EventEmitter";
 
-export default class Renderer {
+export default class Renderer extends EventEmitter{
   experience: Experience;
   instance: THREE.WebGLRenderer;
   constructor() {
+    super();
     this.experience = new Experience();
     this.setInstance();
   }
@@ -33,6 +35,13 @@ export default class Renderer {
     const polyfill = new WebXRPolyfill();
 
     this.instance.setAnimationLoop(this.tick.bind(this));
+
+    this.instance.xr.addEventListener("sessionstart", () => {
+       this.trigger("vrstart");
+    });
+    this.instance.xr.addEventListener("sessionend", () => {
+      this.trigger("vrend");
+    });
   }
 
   resize() {
@@ -44,7 +53,6 @@ export default class Renderer {
   }
 
   tick() {
-    console.log('Ok')
     this.instance.render(
       this.experience.scene,
       this.experience.camera.instance

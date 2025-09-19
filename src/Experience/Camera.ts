@@ -1,25 +1,39 @@
 import * as THREE from "three";
 import Experience from "./Experience";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import Renderer from "./Renderer";
 
 export default class Camera {
   experience: Experience;
   instance: THREE.PerspectiveCamera;
   controls: OrbitControls;
+  cameraContainer: THREE.Object3D;
+  renderer: Renderer;
   constructor() {
+    this.cameraContainer = new THREE.Object3D();
     this.experience = new Experience();
+    this.renderer = this.experience.renderer;
     this.setInstance();
     this.setObitControls();
+
+    this.renderer.on("vrstart", () => {
+      this.setVRMode(true);
+    });
+
+    this.renderer.on("vrend", () => {
+      this.setVRMode(false);
+    });
   }
 
   setInstance() {
     this.instance = new THREE.PerspectiveCamera(
-      35,
+      90,
       this.experience.sizes.aspectRatio,
       0.1,
-      100
+      1000
     );
-    this.instance.position.set(6, 4, 8);
+
+    this.instance.position.set(4, 6, 4);
     this.experience.scene.add(this.instance);
   }
 
@@ -35,5 +49,17 @@ export default class Camera {
 
   update() {
     this.controls.update();
+  }
+
+  setVRMode(isVR: boolean) {
+    if (isVR === true) {
+      this.cameraContainer.add(this.instance);
+      this.cameraContainer.position.set(-1, 0.75, 0);
+      this.experience.scene.add(this.cameraContainer);
+    } else {
+      this.experience.scene.remove(this.cameraContainer);
+      this.instance.position.set(4, 6, 4);
+      this.experience.scene.add(this.instance);
+    }
   }
 }
