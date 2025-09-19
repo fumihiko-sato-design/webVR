@@ -3,7 +3,7 @@ import Experience from "../Experience";
 import { normalMap } from "three/examples/jsm/nodes/Nodes.js";
 
 export default class Floor {
-  gerometry: THREE.CircleGeometry;
+  gerometry: THREE.PlaneGeometry;
   experience: Experience;
   textures: any;
   material: THREE.MeshStandardMaterial;
@@ -18,7 +18,7 @@ export default class Floor {
   }
 
   setGeometries() {
-    this.gerometry = new THREE.CircleGeometry(20, 64);
+    this.gerometry = new THREE.PlaneGeometry(500, 500, 1, 1);
   }
   setTextures() {
     this.textures = {};
@@ -28,15 +28,20 @@ export default class Floor {
     this.textures.color.wrapS = THREE.RepeatWrapping;
     this.textures.color.wrapT = THREE.RepeatWrapping;
 
-    this.textures.normal = this.experience.resources.items.grassNormalTexture;
-    this.textures.normal.repeat.set(1.5, 1.5);
-    this.textures.normal.wrapS = THREE.RepeatWrapping;
-    this.textures.normal.wrapT = THREE.RepeatWrapping;
+    this.textures.rough = this.experience.resources.items.grassNormalTexture;
+    this.textures.rough.repeat.set(1.5, 1.5);
+    this.textures.rough.wrapS = THREE.RepeatWrapping;
+    this.textures.rough.wrapT = THREE.RepeatWrapping;
+    // this.textures.normal = this.experience.resources.items.grassNormalTexture;
+    // this.textures.normal.repeat.set(1.5, 1.5);
+    // this.textures.normal.wrapS = THREE.RepeatWrapping;
+    // this.textures.normal.wrapT = THREE.RepeatWrapping;
   }
   setMaterials() {
     this.material = new THREE.MeshStandardMaterial({
       map: this.textures.color,
-      normalMap: this.textures.normal,
+      roughnessMap: this.textures.rough, // ← 追加
+      // normalMap: this.textures.normal,
     });
   }
   setMeshes() {

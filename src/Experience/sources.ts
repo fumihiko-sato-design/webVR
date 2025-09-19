@@ -14,12 +14,12 @@ export default [
   {
     name: "grassColorTexture",
     type: "texture",
-    path: "textures/dirt/color.jpg",
+    path: "textures/concrete/concrete_floor_worn_001_diff_2k.jpg",
   },
   {
     name: "grassNormalTexture",
     type: "texture",
-    path: "textures/dirt/normal.jpg",
+    path: "textures/concrete/concrete_floor_worn_001_rough_2k.jpg",
   },
   {
     name: "foxModel",
@@ -34,7 +34,7 @@ export default [
   {
     name: "buildingModel",
     type: "gltfModel",
-    path: "models/Bldg/64414283_bldg_6680.glb",
+    path: "models/Bldg/53394577_bldg_6677.glb",
   },
   {
     name: "skyTexture",
