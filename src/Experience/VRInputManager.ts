@@ -29,14 +29,14 @@ export default class VRInputManager {
   }
 
   handleCameraMovement(gamepad) {
-    const moveX = gamepad.axes[2] || 0;
+    const moveX = gamepad.axes[2] * -1 || 0;
     const moveZ = gamepad.axes[3] || 0;
     // Camera移動処理
     this.camera.moveVR(moveX, moveZ);
   }
 
   handleCarMovement(gamepad) {
-    const moveX = gamepad.axes[2] || 0;
+    const moveX = gamepad.axes[2] * -1 || 0;
     const moveZ = gamepad.axes[3] || 0;
 
     if (!this.car) return;
