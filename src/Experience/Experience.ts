@@ -7,6 +7,7 @@ import World from "./World/World";
 import Resources from "./Utils/Resources";
 import sources from "./sources";
 import Debug from "./Utils/Debug";
+import VRInputManager from "./VRInputManager";
 
 let instance: Experience | null = null;
 
@@ -20,6 +21,7 @@ export default class Experience {
   world: World;
   resources: Resources;
   debug: Debug;
+  vrInputManager: VRInputManager;
   constructor(canvas?: HTMLCanvasElement) {
     // singleton
     if (instance) {
@@ -40,6 +42,7 @@ export default class Experience {
     this.renderer = new Renderer();
     this.camera = new Camera();
     this.world = new World();
+    this.vrInputManager = new VRInputManager();
 
     // events
     this.sizes.on("resize", () => {
@@ -61,6 +64,7 @@ export default class Experience {
     this.camera.update();
     this.world.update();
     this.renderer.update();
+    this.vrInputManager.update();
   }
 
   destroy() {

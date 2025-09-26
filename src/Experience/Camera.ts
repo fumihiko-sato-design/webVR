@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Experience from "./Experience";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Renderer from "./Renderer";
+import VRController from "./VRInputManager";
 
 export default class Camera {
   experience: Experience;
@@ -9,10 +10,12 @@ export default class Camera {
   controls: OrbitControls;
   cameraContainer: THREE.Object3D;
   renderer: Renderer;
+  vrController: VRController;
   constructor() {
     this.cameraContainer = new THREE.Object3D();
     this.experience = new Experience();
     this.renderer = this.experience.renderer;
+    this.vrController = this.experience.vrController;
     this.setInstance();
     this.setObitControls();
 
@@ -61,5 +64,21 @@ export default class Camera {
       this.instance.position.set(4, 6, 4);
       this.experience.scene.add(this.instance);
     }
+  }
+
+  moveVR(moveX: number, moveZ: number) {
+    console.log("Camera moveVR", moveX, moveZ);
+    const speed = 0.05;
+    const direction = new THREE.Vector3();
+
+    this.instance.getWorldDirection(direction);
+    direction.y = 0;
+    direction.normalize();
+
+    const right = new THREE.Vector3();
+    right.crossVectors(this.instance.up, direction).normalize();
+
+    this.cameraContainer.position.addScaledVector(direction, -moveZ * speed);
+    this.cameraContainer.position.addScaledVector(right, moveX * speed);
   }
 }

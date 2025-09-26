@@ -37,6 +37,27 @@ export default class Car {
     });
   }
 
+  moveVR(moveX: number, moveZ: number) {
+    // console.log("Car moveVR", direction, speed);
+    // this.model.position.addScaledVector(direction, speed);
+    const speed = 0.05;
+    const direction = new THREE.Vector3();
+    console.log("Car moveVR", moveX, moveZ);
+    this.model.getWorldDirection(direction);
+    direction.y = 0;
+    direction.normalize();
+
+    const right = new THREE.Vector3();
+    right.crossVectors(this.model.up, direction).normalize();
+
+    this.model.position.addScaledVector(direction, -moveZ * speed);
+    this.model.position.addScaledVector(right, moveX * speed);
+  }
+
+  accelerate() {
+    // 加速処理
+  }
+
   // setAnimation() {
   //   this.animation = {};
   //   this.animation.mixer = new THREE.AnimationMixer(this.model);

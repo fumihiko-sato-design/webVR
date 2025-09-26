@@ -27,7 +27,6 @@ export default class World {
       this.bldg = new Bldg();
       this.environment = new Environment();
 
-      console.log(this.resources.items.skyTexture);
       const texture = this.resources.items.skyTexture;
       texture.mapping = THREE.EquirectangularReflectionMapping;
       this.experience.scene.environment = texture; // 環境光として利用
