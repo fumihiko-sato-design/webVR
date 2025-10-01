@@ -66,18 +66,19 @@ export default class Camera {
     }
   }
 
-  moveVR(moveX: number, moveZ: number) {
-    const speed = 0.05;
-    const direction = new THREE.Vector3();
+  moveVR(movement: THREE.Vector3) {
+      this.cameraContainer.position.add(movement);
 
-    this.instance.getWorldDirection(direction);
-    direction.y = 0;
-    direction.normalize();
 
-    const right = new THREE.Vector3();
-    right.crossVectors(this.instance.up, direction).normalize();
 
-    this.cameraContainer.position.addScaledVector(direction, -moveZ * speed);
-    this.cameraContainer.position.addScaledVector(right, moveX * speed);
+    // const speed = 0.05;
+    // const direction = new THREE.Vector3();
+    // this.instance.getWorldDirection(direction);
+    // direction.y = 0;
+    // direction.normalize();
+    // const right = new THREE.Vector3();
+    // right.crossVectors(this.instance.up, direction).normalize();
+    // this.cameraContainer.position.addScaledVector(direction, -moveZ * speed);
+    // this.cameraContainer.position.addScaledVector(right, moveX * speed);
   }
 }

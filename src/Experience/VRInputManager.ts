@@ -39,30 +39,45 @@ export default class VRInputManager {
     if (session) {
       for (const source of session.inputSources) {
         if (source && source.gamepad) {
-          this.handleCameraMovement(source.gamepad);
-          this.handleCarMovement(source.gamepad);
+          const movement = this.getMovementVector(source.gamepad);
+          this.handleCameraMovement(movement);
+          this.handleCarMovement(movement);
         }
       }
     }
   }
 
-  handleCameraMovement(gamepad) {
+  getMovementVector(gamepad) {
     const moveX = gamepad.axes[2] * -1 || 0;
     const moveZ = gamepad.axes[3] || 0;
-    // Camera移動処理
-    this.camera.moveVR(moveX, moveZ);
+
+    // カメラの向きに関係なく、ワールド座標系で移動
+    const speed = 0.05;
+
+    // 固定方向ベクトル（ワールド座標系）
+    const forward = new THREE.Vector3(0, 0, 1); // Z軸負方向が正面
+    const right = new THREE.Vector3(-1, 0, 0); // X軸正方向が右
+
+    // 移動量を計算
+    const movement = new THREE.Vector3();
+    movement.addScaledVector(forward, moveZ * speed); // 前後移動
+    movement.addScaledVector(right, moveX * speed); // 左右移動
+
+    return movement;
   }
 
-  handleCarMovement(gamepad) {
-    const moveX = gamepad.axes[2] * -1 || 0;
-    const moveZ = gamepad.axes[3] || 0;
+  handleCameraMovement(movement: THREE.Vector3) {
+    // カメラコンテナの位置を更新
+    this.camera.moveVR(movement);
+  }
 
+  handleCarMovement(movement: THREE.Vector3) {
     if (!this.car) return;
-    this.car.moveVR(moveX, moveZ);
+    this.car.moveVR(movement);
     // 閾値を設けて微小な動きを無視
-    const threshold = 0.1;
-    const isMoving = Math.abs(moveX) > threshold || Math.abs(moveZ) > threshold;
-
+    const threshold = 0.0001;
+    const isMoving =
+      Math.abs(movement.x) > threshold || Math.abs(movement.z) > threshold;
     if (!this.carSound.isPlaying && isMoving) {
       this.carSound.play();
     } else if (!isMoving && this.carSound.isPlaying) {
