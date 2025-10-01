@@ -67,7 +67,6 @@ export default class Camera {
   }
 
   moveVR(moveX: number, moveZ: number) {
-    console.log("Camera moveVR", moveX, moveZ);
     const speed = 0.05;
     const direction = new THREE.Vector3();
 

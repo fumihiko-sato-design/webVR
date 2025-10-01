@@ -42,7 +42,6 @@ export default class Car {
     // this.model.position.addScaledVector(direction, speed);
     const speed = 0.05;
     const direction = new THREE.Vector3();
-    console.log("Car moveVR", moveX, moveZ);
     this.model.getWorldDirection(direction);
     direction.y = 0;
     direction.normalize();
