@@ -50,9 +50,15 @@ export default class VRInputManager {
   getMovementVector(gamepad) {
     const moveX = gamepad.axes[2] * -1 || 0;
     const moveZ = gamepad.axes[3] || 0;
-
+    let speed = 0.05;
     // カメラの向きに関係なく、ワールド座標系で移動
-    const speed = 0.05;
+    if (gamepad.buttons[0].pressed || gamepad.buttons[1].pressed) {
+      const activeButton = gamepad.buttons[0].pressed
+        ? gamepad.buttons[0]
+        : gamepad.buttons[1];
+
+      speed += activeButton.value;
+    }
 
     // 固定方向ベクトル（ワールド座標系）
     const forward = new THREE.Vector3(0, 0, 1); // Z軸負方向が正面
